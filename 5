@@ -6,7 +6,8 @@ local Tab = {
       Exploit = Window:Tab("Exploit","rbxassetid://11826465934"),
       Visual = Window:Tab("Visual","rbxassetid://11826465934")
 }
-Tab.Main:Slider("Speed",16,25,16,function(v)
+
+Tab.Main:Slider("Speed",16,30,16,function(v)
 _G.Speed = v or 16
 end)
 Tab.Main:Toggle("Enabled Speed",false,function(v)
@@ -19,11 +20,51 @@ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end
 end)
 end)
+local character = game.Players.LocalPlayer.Character
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+local speedBoost, speedBoostFinished, speed = 30, false, false
+if bypass then
+if collisionClone then collisionClone:Destroy() end
+speed = true       
+local originalSpeed = SpeedBypass
+repeat task.wait()
+if not SpeedBypass then
+SpeedBypass:SetValue(true)
+end
+until speedBoostFinished
+SpeedBypass:SetValue(originalSpeed)
+else
+if not collisionClone then
+collisionClone = character.Collision:Clone() do
+collisionClone.CanCollide = false
+collisionClone.Massless = true
+collisionClone.Name = "CollisionClone"
+if collisionClone:FindFirstChild("CollisionCrouch") then
+collisionClone.CollisionCrouch:Destroy()
+end   
+collisionClone.Parent = character    
+end
+end
+task.spawn(function()  
+while not speedBoostFinished do
+collisionClone.Massless = not collisionClone.Massless
+task.wait(_G.Wait or 2)
+end           
+collisionClone.Massless = true                  
+end)
+end
+Tab.Main:Toggle("Speed Bypass",false,function(v)
+if v then
+_G.Wait = 0.2
+else
+_G.Wait = 2
+end
+end)
 Tab.Main:Line()
 Tab.Main:Slider("Max Slope Angle",0,90,30,function(v)
 _G.MaxSlopeAngle = v or 30
 end)
-Tab:Toggle("Enabled Max Slope Angle",false,function(v)
+Tab.Main:Toggle("Enabled Max Slope Angle",false,function(v)
 _G.EnabledMaxSlopeAngle = v
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.EnabledMaxSlopeAngle then
@@ -108,6 +149,80 @@ workspace.Gravity = 90
 end
 end)
 end)
+game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
+if _G.FastCloset and game.Players.LocalPlayer.Character:GetAttribute("Hiding")==true then 
+game:GetService("ReplicatedStorage").EntityInfo.CamLock:FireServer()end end)
+Tab.Misc:Toggle("Closet Exit Fixed",false,function(v)
+_G.FastCloset = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.OpenDoorFar then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door").ClientOpen:FireServer()
+end 
+end)
+end)
+Tab.Misc:Toggle("Distant Door",false,function(v)
+_G.OpenDoorFar = v
+end)
+game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function(v)
+if not _G.ReachPrompt then return end
+if v:IsA("ProximityPrompt") then
+if _G.ReachPrompt then
+v.MaxActivationDistance *= _G.ReachPrompt and 2 or 0.5
+end
+end
+end)
+Tab.Misc:Toggle("Distant Press",false,function(v)
+_G.ReachPrompt = v
+end)
+game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function(v)
+if not _G.ThroughInteract then return end
+if v:IsA("ProximityPrompt") then
+if _G.ThroughInteract then
+v.RequiresLineOfSight = false
+else
+v.RequiresLineOfSight = true
+end
+end
+end)
+Tab.Misc:Toggle("Through Interact",false,function(v)
+_G.ThroughInteract = v
+end)
+game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function(v)
+if not _G.InstanceInteract then return end
+if v:IsA("ProximityPrompt") then
+if _G.InstanceInteract then
+v.HoldDuration = 0
+end
+end
+end)
+Tab.Misc:Toggle("Fast Interact",false,function(v)
+_G.InstanceInteract = v
+end)
+Tab.Misc:Line()
+Tab.Misc:Button("Reset Character",function()
+Library:Notify("< ! > | YOUHUB","Reset Character",Color3.new(1,1,1),2.5)
+game.Players.LocalPlayer.Character.Humanoid.Health = 0
+end)
+Tab.Misc:Button("Play Again",function()
+Library:Notify("< ! > | YOUHUB","Teleport to Play Again...",Color3.new(1,1,1),2.5)
+game:GetService("ReplicatedStorage").EntityInfo.PlayAgain:FireServer()
+end)
+Tab.Misc:Button("Lobby",function()
+Library:Notify("< ! > | YOUHUB","Teleport to Lobby...",Color3.new(1,1,1),2.5)
+game:GetService("ReplicatedStorage").EntityInfo.Lobby:FireServer()
+end)
+Tab.Misc:Button("Revive",function()
+Library:Notify("< ! > | YOUHUB","Revive loading...",Color3.new(1,1,1),2.5)
+game:GetService("ReplicatedStorage").EntityInfo.Revive:FireServer()
+end)
+Tab.Misc:Button("Leave",function()
+Library:Notify("< ! > | YOUHUB","Leave is loading...",Color3.new(1,1,1),2.5)
+wait(3)
+game.Players.LocalPlayer:Shutdown()
+end)
+
+
 
 
 

@@ -75,8 +75,8 @@ end
 end)
 end)
 Tab.Main:Line()
-Tab.Main:Slider("Body Transparency",0.1,1,0.1,function(v)
-_G.BodyTransparency = v or 0.1
+Tab.Main:Dropdown("Body Transparency",{0.25,0.5,0.75},function(v)
+_G.BodyTransparency = v or 0
 end)
 Tab.Main:Toggle("Enabled Body Transparency",false,function(v)
 _G.EnabledBodyTransparency = v
@@ -119,19 +119,42 @@ end
 end)
 end)
 Tab.Main:Line()
+Tab.Main:Toggle("Enabled No Slow",false,function(v)
+_G.NoSlow = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character.Head.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftHand.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftLowerArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftUpperArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.LowerTorso.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightFoot.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightHand.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightLowerArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightLowerLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightUpperArm.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.RightUpperLeg.Massless = not _G.NoSlow;
+game.Players.LocalPlayer.Character.UpperTorso.Massless = not _G.NoSlow;
+end)
+end)
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()
 for _,v in next,game.Players.LocalPlayer.Character:GetDescendants() do 
 if v:IsA("BasePart", v) and _G.Noclip then 
 v.CanCollide = false
-else
-v.CanCollide = true
 end
 end
 end)
 end)
 Tab.Main:Toggle("Enabled Noclip",false,function(v)
-_G.Noclip = v
+_G.Noclip = v or false
+if _G.Noclip == false then				
+v:IsA("BasePart")
+v.CanCollide = true
+end
 end)
 Tab.Main:Toggle("Enabled Jump",false,function(v)
 _G.Jump = v

@@ -1,0 +1,155 @@
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Cold-Script/BF/refs/heads/main/WhiteLib.lua'))()
+local Window = Library:Window("YOUHUB")
+local Tab = {
+      Main = Window:Tab("Main","rbxassetid://11826465934"),
+      Misc = Window:Tab("Miscellaneous","rbxassetid://11826465934"),
+      Exploit = Window:Tab("Exploit","rbxassetid://11826465934"),
+      Visual = Window:Tab("Visual","rbxassetid://11826465934")
+}
+Tab.Main:Slider("Speed",16,25,16,function(v)
+_G.Speed = v or 16
+end)
+Tab.Main:Toggle("Enabled Speed",false,function(v)
+_G.EnabledSpeed = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledSpeed then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = _G.Speed or 16
+else
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end
+end)
+end)
+Tab.Main:Line()
+Tab.Main:Slider("Max Slope Angle",0,90,30,function(v)
+_G.MaxSlopeAngle = v or 30
+end)
+Tab:Toggle("Enabled Max Slope Angle",false,function(v)
+_G.EnabledMaxSlopeAngle = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledMaxSlopeAngle then
+game.Players.LocalPlayer.Character.Humanoid.MaxSlopeAngle = _G.MaxSlopeAngle or 30
+else
+game.Players.LocalPlayer.Character.Humanoid.MaxSlopeAngle = 30
+end
+end)
+end)
+Tab.Main:Line()
+Tab.Main:Slider("Body Transparency",0.1,1,0.1,function(v)
+_G.BodyTransparency = v or 0.1
+end)
+Tab.Main:Toggle("Enabled Body Transparency",false,function(v)
+_G.EnabledBodyTransparency = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledBodyTransparency then
+game.Players.LocalPlayer.Character.Head.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.LeftFoot.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.LeftHand.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.LeftLowerArm.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.LeftLowerLeg.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.LeftUpperArm.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.LeftUpperLeg.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.LowerTorso.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.RightFoot.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.RightFoot.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.RightHand.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.RightLowerArm.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.RightLowerLeg.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.RightUpperArm.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.RightUpperLeg.Transparency = _G.BodyTransparency or 0.1;
+game.Players.LocalPlayer.Character.UpperTorso.Transparency = _G.BodyTransparency or 0.1;	
+else
+game.Players.LocalPlayer.Character.Head.Transparency = 0;
+game.Players.LocalPlayer.Character.LeftFoot.Transparency = 0;
+game.Players.LocalPlayer.Character.LeftHand.Transparency = 0;
+game.Players.LocalPlayer.Character.LeftLowerArm.Transparency = 0;
+game.Players.LocalPlayer.Character.LeftLowerLeg.Transparency = 0;
+game.Players.LocalPlayer.Character.LeftUpperArm.Transparency = 0;
+game.Players.LocalPlayer.Character.LeftUpperLeg.Transparency = 0;
+game.Players.LocalPlayer.Character.LowerTorso.Transparency = 0;
+game.Players.LocalPlayer.Character.RightFoot.Transparency = 0;
+game.Players.LocalPlayer.Character.RightFoot.Transparency = 0;
+game.Players.LocalPlayer.Character.RightHand.Transparency = 0;
+game.Players.LocalPlayer.Character.RightLowerArm.Transparency = 0;
+game.Players.LocalPlayer.Character.RightLowerLeg.Transparency = 0;
+game.Players.LocalPlayer.Character.RightUpperArm.Transparency = 0;
+game.Players.LocalPlayer.Character.RightUpperLeg.Transparency = 0;
+game.Players.LocalPlayer.Character.UpperTorso.Transparency = 0;	
+end
+end)
+end)
+Tab.Main:Line()
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+for _,v in next,game.Players.LocalPlayer.Character:GetDescendants() do 
+if v:IsA("BasePart", v) and _G.Noclip then 
+v.CanCollide = false
+else
+v.CanCollide = true
+end
+end
+end)
+end)
+Tab.Main:Toggle("Enabled Noclip",false,function(v)
+_G.Noclip = v
+end)
+Tab.Main:Toggle("Enabled Jump",false,function(v)
+_G.Jump = v
+game:GetService("RunService").RenderStepped:Connect(function()
+game.Players.LocalPlayer.Character:SetAttribute("CanJump", _G.Jump)
+end)
+end)
+Tab.Main:Toggle("Enabled Slow Space",false,function(v)
+_G.SlowJump = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.SlowJump then
+workspace.Gravity = 50
+else
+workspace.Gravity = 90
+end
+end)
+end)
+
+
+
+
+
+Tab:Slider("This is Slider",0,10,0,function(V) end)
+Tab:Toggle("This is Toggle",false,function(v)
+if v then game.Lighting.Brightness = 100
+else 
+game.Lighting.Brightness = 1 end end)
+Tab:Label("This is Label")
+Tab:Button("This is Button",false,function()end)
+Tab:Textbox("This is Textbox",function()end)
+Tab:Dropdown("Dropdown",{"1","2","3"},function()end)
+Tab:Line() -- This is Line
+Tab:Button("This is Button But Notify",function()Library:Notify("< ! > | Notify","This is Notify",Color3.new(1,1,1),5)end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

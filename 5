@@ -460,11 +460,61 @@ Tab.Exploit:Toggle("Anti-Light Break",false,function(v)
 _G.lasf = v
 end)
 Tab.Exploit:Toggle("Anti-Dread",false,function(v)
+_G.AntiDread = v
 game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiDread then
 local module = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("Dread", true) or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("_Dread", true)
-module.Name = v and "_Dread" or "Dread"
+module.Name = true and "_Dread" or "Dread"
+else
+local module = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("Dread", true) or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("_Dread", true)
+module.Name = false and "_Dread" or "Dread"
 end)
 end)
+Tab.Floors:Label("Fools")
+game:GetService("Workspace").DescendantAdded:Connect(function(v)
+if not _G.AntiBanana then return end
+if v:IsA("Part") then
+if _G.AntiBanana then
+if v.Name == "BananaPeel" then
+v.CanTouch = false
+v.CanCollide = false
+end
+end
+end
+end)
+Tab.Floors:Toggle("Anti-Banana",false,function(v)
+_G.AntiBanana = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()pcall(function()
+if _G.antije then for _,v in pairs(game.workspace:GetChildren()) do 
+if (v.Name=="JeffTheKiller") then v.Knife.CanTouch=false;end end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if (v.Name=="JeffTheKiller") then v.Head.CanTouch=false;end end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if (v.Name=="JeffTheKiller") then v.HumanoidRootPart.CanTouch=false;end end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if (v.Name=="JeffTheKiller") then v["Left Arm"].CanTouch=false;end end
+for _,v in pairs(game.workspace:GetChildren()) do 
+if (v.Name=="JeffTheKiller") then v["Left Leg"].CanTouch=false;end end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if (v.Name=="JeffTheKiller") then v["Right Arm"].CanTouch=false;end end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if (v.Name=="JeffTheKiller") then v["Right Leg"].CanTouch=false;end end 
+for _,v in pairs(game.workspace:GetChildren()) do 
+if (v.Name=="JeffTheKiller") then v.Torso.CanTouch=false;end end end end);end);
+Tab2:Toggle("Anti-Jeff",false,function(v)
+_G.antije = v
+end)
+Tab.Floors:Toggle("Godmode",false,function(v)
+if v then
+local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
+Collison.Position = Collison.Position - Vector3.new(0,10,0)
+else
+local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
+Collison.Position = Collison.Position - Vector3.new(0,-10,0)
+end
+end)
+
 
 Tab:Slider("This is Slider",0,10,0,function(V) end)
 Tab:Toggle("This is Toggle",false,function(v)

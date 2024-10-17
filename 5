@@ -1,9 +1,9 @@
 function checkDistance(part, extra)
 if not extra then extra = 15 end
-if not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not part then
+if not game.Players.LocalPlayer.Character:FindFirstChild("Collision") or not part then
 return false
 end
-local distanceToPart = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).magnitude
+local distanceToPart = (game.Players.LocalPlayer.Character.Collision.Position - part.Position).magnitude
 if distanceToPart <= extra then
 return true
 end
@@ -18,7 +18,7 @@ local Tab = {
       Visual = Window:Tab("Visual","rbxassetid://11826465934"),
       Floors = Window:Tab("Floors","rbxassetid://11826465934")
 }
-
+local flags = {hintrush=false,hintrushhee=false,light=false,instapp=false,noseek=false,nogates=false,nopuzzle=false,noa90=false,noskeledoors=false,noseekarmsfire=false,noscreech=false,nodupe=false,getcode=false,getcodet=false,roomsnolock=false,draweraura=false,autorooms=false,itemsaura=false,autopulllever=false,bookcollecter=false,breakercollecter=false}
 Tab.Main:Slider("Speed",16,30,0,function(v)
 _G.Speed = v or 16
 end)
@@ -32,6 +32,7 @@ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end
 end)
 end)
+_G.FlySpeed = 16
 Tab.Main:Slider("Fly Speed",16,45,0,function(v)
 _G.FlySpeed = v
 end)
@@ -75,7 +76,7 @@ bg.D = 50
 end)
 local camera = Workspace.CurrentCamera
 game:GetService("RunService").RenderStepped:Connect(function()
-local speed = _G.FlySpeed or 16
+local speed = _G.FlySpeed
 end)
 local Signal2
 Signal2 = rs.RenderStepped:Connect(function()
@@ -427,10 +428,60 @@ fog.Density = value and 0 or fog:GetAttribute("Density")
 end
 end)
 end)
-
-
-
-
+game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function()
+pcall(function()
+if _G.AntiEyes then if workspace:FindFirstChild("Eyes") then 
+game:GetService("ReplicatedStorage").EntityInfo.MotorReplication:FireServer(0,(_G.AntiEyes and 120) or 0 ,0,false);
+end end end);end);
+Tab.Exploit:Toggle("Anti-Eyes",false,function(v)
+_G.AntiEyes = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if _G.BypassSnare then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do 
+if (v.Name=="Snare") then v.Hitbox['TouchInterest']:Destroy();end end end end);end);
+Tab.Exploit:Toggle("Anti-Snare",false,function(v)
+_G.BypassSnare = v
+end)
+Tab.Exploit:Toggle("Anti-Halt",false,function(v)
+local v2=0;while true do if v2 == 0 then _G.BypassHalte = v;
+if (_G.BypassHalte==true) then local v3=0;local v4;while true do if v3 == 0 then v4 = game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade;v4.Parent=game.Workspace;break;end end elseif (_G.BypassHalte==false) then local v5 = 0;local v6;while true do if v5 == 0 then v6 = game.Workspace.Shade;v6.Parent=game:GetService("ReplicatedStorage").ClientModules.EntityModules;break;end end end break;end end end);
+Tab.Exploit:Toggle("Anti-Screech",false,function(v)
+if v then
+local Screech = game:GetService("ReplicatedStorage").Entities.Screech:Destroy()
+else
+Screech:Disconnect()
+end
+end)
+Tab.Exploit:Toggle("Anti-Figure Hearing",false,function(v)
+if v then
+game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(true)
+else
+game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(false)
+end
+end)   
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()if _G.SeekChase then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("TiggerEventCollision") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do if (v.Name=="TriggerEventCollision") then v:Destroy();end end end end end);end);
+Tab.Exploit:Toggle("Anti-Seek Trigger",false,function(v)_G.SeekChase = v;end)
+game:GetService("RunService").RenderStepped:Connect(function()pcall(function()
+if _G.lasf then 
+if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Chandelier") then 
+game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Chandelier:Destroy();
+end end end);end);
+game:GetService("RunService").RenderStepped:Connect(function()pcall(function()if _G.lasf then
+if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Light_Fixtures") then 
+game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets").Light_Fixtures:Destroy();
+end end end);end);
+Tab.Exploit:Toggle("Anti-Light Break",false,function(v)
+_G.lasf = v
+end)
+Tab.Exploit:Toggle("Anti-Dread",false,function(v)
+game:GetService("RunService").RenderStepped:Connect(function()
+local module = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("Dread", true) or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("_Dread", true)
+module.Name = v and "_Dread" or "Dread"
+end)
+end)
 
 Tab:Slider("This is Slider",0,10,0,function(V) end)
 Tab:Toggle("This is Toggle",false,function(v)

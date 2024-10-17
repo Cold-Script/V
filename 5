@@ -1,4 +1,4 @@
-function Distance(part, extra)
+function checkDistance(part, extra)
 if not extra then extra = 15 end
 if not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not part then
 return false
@@ -15,7 +15,8 @@ local Tab = {
       Main = Window:Tab("Main","rbxassetid://11826465934"),
       Misc = Window:Tab("Miscellaneous","rbxassetid://11826465934"),
       Exploit = Window:Tab("Exploit","rbxassetid://11826465934"),
-      Visual = Window:Tab("Visual","rbxassetid://11826465934")
+      Visual = Window:Tab("Visual","rbxassetid://11826465934"),
+      Floors = Window:Tab("Floors","rbxassetid://11826465934")
 }
 
 Tab.Main:Slider("Speed",16,30,0,function(v)
@@ -72,10 +73,10 @@ bg.MaxTorque = Vector3.new(9e9,9e9,9e9)
 bg.P = 1000
 bg.D = 50
 end)
-
 local camera = Workspace.CurrentCamera
+game:GetService("RunService").RenderStepped:Connect(function()
 local speed = _G.FlySpeed or 16
-
+end)
 local Signal2
 Signal2 = rs.RenderStepped:Connect(function()
 if Lp.Character and Lp.Character:FindFirstChildOfClass("Humanoid") and Lp.Character.Humanoid.RootPart and Lp.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and Lp.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
@@ -318,20 +319,24 @@ if child.Name == "Eyes" then
 Library:Notify("< ! > | YOUHUB","Eyes has spawned, dont look at it!",Color3.new(0,0,1),2.5)
 elseif child.Name == "BackdoorLookman" then
 Library:Notify("< ! > | YOUHUB","Lookman has spawned, dont look at it!",Color3.fromRGB(80,80,80),2.5)
+end
+end)
+EntityNotifierScreech = workspace.CurrentCamera.ChildAdded:Connect(function(child)
 elseif child.Name == "Screech" then
 Library:Notify("< ! > | YOUHUB","Screech has spawned, look at it!",Color3.fromRGB(80,80,80),2.5)
 end
 end)
 else
+EntityNotifierScreech:Disconnect()
 EntityNotifierLook:Disconnect()
 end
 end)
 Tab.Misc:Toggle("Entities Notifier (Move)",false,function(v)
 if v then
 EntityNotifierMove = workspace.ChildAdded:Connect(function(child)
-if child.Name == "RushMoving" and Distance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
+if child.Name == "RushMoving" and checkDistance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
 Library:Notify("< ! > | YOUHUB","Rush has spawned, find the closet hide now!",Color3.fromRGB(80,80,80),2.5)
-elseif child.Name == "AmbushMoving" and Distance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
+elseif child.Name == "AmbushMoving" and checkDistance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
 Library:Notify("< ! > | YOUHUB","Ambush has spawned, careful with it!",Color3.fromRGB(0,255,0),2.5)
 elseif child.Name == "BackdoorRush" then
 Library:Notify("< ! > | YOUHUB","Blitz has spawned, find the closet hide now!",Color3.fromRGB(0,200,0),2.5)
@@ -339,9 +344,9 @@ elseif child.Name == "SeekNewCloneMoving" then
 Library:Notify("< ! > | YOUHUB","Seek has chase with you, goodluck!",Color3.fromRGB(80,80,80),2.5)
 elseif child.Name == "SeekMoving" then
 Library:Notify("< ! > | YOUHUB","Seek has chase with you, goodluck!",Color3.fromRGB(80,80,80),2.5)
-elseif child.Name == "FigureRig" and Distance(child:FindFirstChildWhichIsA("Head"), 15) then
+elseif child.Name == "FigureRig" and checkDistance(child:FindFirstChildWhichIsA("Head"), 15) then
 Library:Notify("< ! > | YOUHUB","Figure near, careful!",Color3.new(1),2.5)
-elseif child.Name == "FigureRagdoll" and Distance(child:FindFirstChildWhichIsA("Head"), 15) then
+elseif child.Name == "FigureRagdoll" and checkDistance(child:FindFirstChildWhichIsA("Head"), 15) then
 Library:Notify("< ! > | YOUHUB","Figure near, careful!",Color3.new(1),2.5)
 end
 end)
@@ -362,7 +367,6 @@ else
 EntityNotifierNext:Disconnect()
 end
 end)
-
 Tab.Misc:Line()
 Tab.Misc:Button("Reset Character",function()
 Library:Notify("< ! > | YOUHUB","Reset Character",Color3.new(1,1,1),2.5)

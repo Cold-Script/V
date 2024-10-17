@@ -1,3 +1,14 @@
+function Distance(part, extra)
+if not extra then extra = 15 end
+if not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not part then
+return false
+end
+local distanceToPart = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).magnitude
+if distanceToPart <= extra then
+return true
+end
+return false
+end
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Cold-Script/BF/refs/heads/main/WhiteLib.lua'))()
 local Window = Library:Window("YOUHUB")
 local Tab = {
@@ -7,7 +18,7 @@ local Tab = {
       Visual = Window:Tab("Visual","rbxassetid://11826465934")
 }
 
-Tab.Main:Slider("Speed",16,30,function(v)
+Tab.Main:Slider("Speed",16,30,0,function(v)
 _G.Speed = v or 16
 end)
 Tab.Main:Toggle("Enabled Speed",false,function(v)
@@ -19,6 +30,82 @@ else
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end
 end)
+end)
+local VdbwjS = Instance.new("StringValue",game:GetService("ReplicatedStorage"))
+VdbwjS.Name = "BZn2q91BzN"
+
+local plr = game:GetService"Players"
+local Lp = plr.LocalPlayer
+local rs = game:GetService"RunService"
+local UserInputService = game:GetService"UserInputService"
+local controlModule = require(Lp.PlayerScripts:WaitForChild('PlayerModule'):WaitForChild("ControlModule"))
+-- Get joystick
+
+local bv = Instance.new("BodyVelocity")
+bv.Name = "VelocityHandler"
+bv.Parent = Lp.Character.HumanoidRootPart
+bv.MaxForce = Vector3.new(0,0,0)
+bv.Velocity = Vector3.new(0,0,0)
+
+local bg = Instance.new("BodyGyro")
+bg.Name = "GyroHandler"
+bg.Parent = Lp.Character.HumanoidRootPart
+bg.MaxTorque = Vector3.new(9e9,9e9,9e9)
+bg.P = 1000
+bg.D = 50
+
+local Signal1
+Signal1 = Lp.CharacterAdded:Connect(function(NewChar)
+local bv = Instance.new("BodyVelocity")
+bv.Name = "VelocityHandler"
+bv.Parent = NewChar:WaitForChild("Humanoid").RootPart
+bv.MaxForce = Vector3.new(0,0,0)
+bv.Velocity = Vector3.new(0,0,0)
+
+local bg = Instance.new("BodyGyro")
+bg.Name = "GyroHandler"
+bg.Parent = NewChar:WaitForChild("Humanoid").RootPart
+bg.MaxTorque = Vector3.new(9e9,9e9,9e9)
+bg.P = 1000
+bg.D = 50
+end)
+
+local camera = Workspace.CurrentCamera
+local speed = _G.FlySpeed
+
+local Signal2
+Signal2 = rs.RenderStepped:Connect(function()
+if Lp.Character and Lp.Character:FindFirstChildOfClass("Humanoid") and Lp.Character.Humanoid.RootPart and Lp.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and Lp.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
+if _G.Fly then
+Lp.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(9e9,9e9,9e9)
+Lp.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(9e9,9e9,9e9)
+Lp.Character.Humanoid.PlatformStand = true
+else Lp.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(0,0,0)
+Lp.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(0,0,0)
+Lp.Character.Humanoid.PlatformStand = false
+end
+Lp.Character.HumanoidRootPart.GyroHandler.CFrame = camera.CoordinateFrame
+local direction = controlModule:GetMoveVector()
+Lp.Character.HumanoidRootPart.VelocityHandler.Velocity = Vector3.new()
+if direction.X > 0 then
+Lp.Character.HumanoidRootPart.VelocityHandler.Velocity = Lp.Character.HumanoidRootPart.VelocityHandler.Velocity + camera.CFrame.RightVector*(direction.X*speed)
+end
+if direction.X < 0 then
+Lp.Character.HumanoidRootPart.VelocityHandler.Velocity = Lp.Character.HumanoidRootPart.VelocityHandler.Velocity + camera.CFrame.RightVector*(direction.X*speed)
+end
+if direction.Z > 0 then
+Lp.Character.HumanoidRootPart.VelocityHandler.Velocity = Lp.Character.HumanoidRootPart.VelocityHandler.Velocity - camera.CFrame.LookVector*(direction.Z*speed)
+end
+if direction.Z < 0 then
+Lp.Character.HumanoidRootPart.VelocityHandler.Velocity = Lp.Character.HumanoidRootPart.VelocityHandler.Velocity - camera.CFrame.LookVector*(direction.Z*speed)
+end
+end
+end)
+Tab.Main:Slider("Fly Speed",16,45,0,function(v)
+_G.FlySpeed = v or 16
+end)
+Tab.Main:Toggle("Fly",false,function(v)
+_G.Fly = v
 end)
 local character = game.Players.LocalPlayer.Character
 local humanoid = character:FindFirstChildOfClass("Humanoid")
@@ -61,7 +148,7 @@ _G.Wait = 2
 end
 end)
 Tab.Main:Line()
-Tab.Main:Slider("Max Slope Angle",30,90,function(v)
+Tab.Main:Slider("Max Slope Angle",30,90,0,function(v)
 _G.MaxSlopeAngle = v or 30
 end)
 Tab.Main:Toggle("Enabled Max Slope Angle",false,function(v)
@@ -222,6 +309,62 @@ end)
 Tab.Misc:Toggle("Fast Interact",false,function(v)
 _G.InstanceInteract = v
 end)
+Tab.Misc:Line()
+Tab.Misc:Toggle("Entities Notifier (Look)",false,function(v)
+if v then
+EntityNotifierLook = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+if child.Name == "Eyes" then
+Library:Notify("< ! > | YOUHUB","Eyes has spawned, dont look at it!",Color3.new(0,0,1),2.5)
+elseif child.Name == "BackdoorLookman" then
+Library:Notify("< ! > | YOUHUB","Lookman has spawned, dont look at it!",Color3.fromRGB(80,80,80),2.5)
+elseif child.Name == "Screech" then
+Library:Notify("< ! > | YOUHUB","Screech has spawned, look at it!",Color3.fromRGB(80,80,80),2.5)
+end
+end)
+else
+EntityNotifierLook:Disconnect()
+end
+end)
+Tab.Misc:Toggle("Entities Notifier (Move)",false,function(v)
+if v then
+EntityNotifierMove = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+if child.Name == "RushMoving" and Distance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
+Library:Notify("< ! > | YOUHUB","Rush has spawned, find the closet hide now!",Color3.fromRGB(80,80,80),2.5)
+elseif child.Name == "AmbushMoving" and Distance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
+Library:Notify("< ! > | YOUHUB","Ambush has spawned, careful with it!",Color3.fromRGB(0,255,0),2.5)
+elseif child.Name == "BackdoorRush" then
+Library:Notify("< ! > | YOUHUB","Blitz has spawned, find the closet hide now!",Color3.fromRGB(0,200,0),2.5)
+elseif child.Name == "SeekNewCloneMoving" then
+Library:Notify("< ! > | YOUHUB","Seek has chase with you, goodluck!",Color3.fromRGB(80,80,80),2.5)
+elseif child.Name == "SeekMoving" then
+Library:Notify("< ! > | YOUHUB","Seek has chase with you, goodluck!",Color3.fromRGB(80,80,80),2.5)
+elseif child.Name == "FigureRig" and Distance(child:FindFirstChildWhichIsA("Head"), 15) then
+Library:Notify("< ! > | YOUHUB","Figure near, careful!",Color3.new(1),2.5)
+elseif child.Name == "FigureRagdoll" and Distance(child:FindFirstChildWhichIsA("Head"), 15) then
+Library:Notify("< ! > | YOUHUB","Figure near, careful!",Color3.new(1),2.5)
+end
+end)
+else
+EntityNotifierMove:Disconnect()
+end
+end)
+Tab.Misc:Toggle("Entities Notifier (Next)",false,function(v)
+if v then
+EntityNotifierNext = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+if child.Name == "JeffTheKiller" then
+Library:Notify("< ! > | YOUHUB","Jeff The Kill has spawned in next door , careful with it!",Color3.new(1,1,1),2.5)
+elseif child.Name == "GloomEgg" then
+Library:Notify("< ! > | YOUHUB","GloomPile has spawned in next door, off the light!",Color3.fromRGB(255,255,255),2.5)
+end
+end)
+else
+EntityNotifierNext:Disconnect()
+end
+end)
+
+
+
+
 Tab.Misc:Line()
 Tab.Misc:Button("Reset Character",function()
 Library:Notify("< ! > | YOUHUB","Reset Character",Color3.new(1,1,1),2.5)

@@ -322,7 +322,7 @@ Library:Notify("< ! > | YOUHUB","Lookman has spawned, dont look at it!",Color3.f
 end
 end)
 EntityNotifierScreech = workspace.CurrentCamera.ChildAdded:Connect(function(child)
-elseif child.Name == "Screech" then
+if child.Name == "Screech" then
 Library:Notify("< ! > | YOUHUB","Screech has spawned, look at it!",Color3.fromRGB(80,80,80),2.5)
 end
 end)

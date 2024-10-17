@@ -1,16 +1,5 @@
-function checkDistance(part, extra)
-if not extra then extra = 15 end
-if not game.Players.LocalPlayer.Character:FindFirstChild("Collision") or not part then
-return false
-end
-local distanceToPart = (game.Players.LocalPlayer.Character.Collision.Position - part.Position).magnitude
-if distanceToPart <= extra then
-return true
-end
-return false
-end
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Cold-Script/BF/refs/heads/main/WhiteLib.lua'))()
-local Window = Library:Window("YOUHUB")
+local Window = Library:Window("YOUHUB | V5")
 local Tab = {
       Main = Window:Tab("Main","rbxassetid://11826465934"),
       Misc = Window:Tab("Miscellaneous","rbxassetid://11826465934"),
@@ -31,10 +20,6 @@ else
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end
 end)
-end)
-_G.FlySpeed = 16
-Tab.Main:Slider("Fly Speed",16,45,0,function(v)
-_G.FlySpeed = v
 end)
 local VdbwjS = Instance.new("StringValue",game:GetService("ReplicatedStorage"))
 VdbwjS.Name = "BZn2q91BzN"
@@ -75,9 +60,7 @@ bg.P = 9e4
 bg.D = 50
 end)
 local camera = Workspace.CurrentCamera
-game:GetService("RunService").RenderStepped:Connect(function()
-local speed = _G.FlySpeed
-end)
+local speed = 25
 local Signal2
 Signal2 = rs.RenderStepped:Connect(function()
 if Lp.Character and Lp.Character:FindFirstChildOfClass("Humanoid") and Lp.Character.Humanoid.RootPart and Lp.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and Lp.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
@@ -335,9 +318,9 @@ end)
 Tab.Misc:Toggle("Entities Notifier (Move)",false,function(v)
 if v then
 EntityNotifierMove = workspace.ChildAdded:Connect(function(child)
-if child.Name == "RushMoving" and checkDistance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
+if child.Name == "RushNew" and child.Parent.Name == "RushMoving" then
 Library:Notify("< ! > | YOUHUB","Rush has spawned, find the closet hide now!",Color3.fromRGB(80,80,80),2.5)
-elseif child.Name == "AmbushMoving" and checkDistance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
+elseif child.Name == "RushNew" and child.Parent.Name == "AmbushMoving" then
 Library:Notify("< ! > | YOUHUB","Ambush has spawned, careful with it!",Color3.fromRGB(0,255,0),2.5)
 elseif child.Name == "BackdoorRush" then
 Library:Notify("< ! > | YOUHUB","Blitz has spawned, find the closet hide now!",Color3.fromRGB(0,200,0),2.5)

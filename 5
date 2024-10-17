@@ -31,6 +31,9 @@ game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end
 end)
 end)
+Tab.Main:Slider("Fly Speed",16,45,0,function(v)
+_G.FlySpeed = v
+end)
 local VdbwjS = Instance.new("StringValue",game:GetService("ReplicatedStorage"))
 VdbwjS.Name = "BZn2q91BzN"
 
@@ -71,7 +74,7 @@ bg.D = 50
 end)
 
 local camera = Workspace.CurrentCamera
-local speed = _G.FlySpeed
+local speed = _G.FlySpeed or 16
 
 local Signal2
 Signal2 = rs.RenderStepped:Connect(function()
@@ -101,9 +104,7 @@ Lp.Character.HumanoidRootPart.VelocityHandler.Velocity = Lp.Character.HumanoidRo
 end
 end
 end)
-Tab.Main:Slider("Fly Speed",16,45,0,function(v)
-_G.FlySpeed = v or 16
-end)
+
 Tab.Main:Toggle("Fly",false,function(v)
 _G.Fly = v
 end)
@@ -312,7 +313,7 @@ end)
 Tab.Misc:Line()
 Tab.Misc:Toggle("Entities Notifier (Look)",false,function(v)
 if v then
-EntityNotifierLook = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+EntityNotifierLook = workspace.ChildAdded:Connect(function(child)
 if child.Name == "Eyes" then
 Library:Notify("< ! > | YOUHUB","Eyes has spawned, dont look at it!",Color3.new(0,0,1),2.5)
 elseif child.Name == "BackdoorLookman" then
@@ -327,7 +328,7 @@ end
 end)
 Tab.Misc:Toggle("Entities Notifier (Move)",false,function(v)
 if v then
-EntityNotifierMove = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+EntityNotifierMove = workspace.ChildAdded:Connect(function(child)
 if child.Name == "RushMoving" and Distance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
 Library:Notify("< ! > | YOUHUB","Rush has spawned, find the closet hide now!",Color3.fromRGB(80,80,80),2.5)
 elseif child.Name == "AmbushMoving" and Distance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
@@ -350,7 +351,7 @@ end
 end)
 Tab.Misc:Toggle("Entities Notifier (Next)",false,function(v)
 if v then
-EntityNotifierNext = workspace.CurrentRooms.ChildAdded:Connect(function(child)
+EntityNotifierNext = workspace.ChildAdded:Connect(function(child)
 if child.Name == "JeffTheKiller" then
 Library:Notify("< ! > | YOUHUB","Jeff The Kill has spawned in next door , careful with it!",Color3.new(1,1,1),2.5)
 elseif child.Name == "GloomEgg" then
@@ -361,9 +362,6 @@ else
 EntityNotifierNext:Disconnect()
 end
 end)
-
-
-
 
 Tab.Misc:Line()
 Tab.Misc:Button("Reset Character",function()
@@ -387,8 +385,44 @@ Library:Notify("< ! > | YOUHUB","Leave is loading...",Color3.new(1,1,1),2.5)
 wait(3)
 game:Shutdown()
 end)
-
-
+Tab.Visual:Slider("Field Of View",70,120,0,function(v)
+_G.FieldOfView = v
+end)
+Tab.Visual:Toggle("Enabled Field Of View",false,function(v)
+_G.EnabledFieldOfView = v
+game:GetService("RunService").RenderStepped:Connect(function()
+if _G.EnabledFieldOfView then
+workspace.CurrentCamera.FieldOfView = _G.FieldOfView or 70
+else
+workspace.CurrentCamera.FieldOfView = 70
+end
+end)
+end)
+Tab.Visual:Line()
+Tab.Visual:Toggle("Fullbright",false,function(v)
+if v then
+game.Lighting.Brightness = 1.5
+game.Lighting.GlobalShadows = false
+game.Lighting.OutdoorAmbient = Color3.new(1,1,1)
+else
+game.Lighting.Brightness = 1
+game.Lighting.GlobalShadows = true
+game.Lighting.OutdoorAmbient = Color3.new(0,0,0)
+end
+end)
+Tab.Visual:Toggle("No Fog",false,function(v)
+pcall(function()
+if not game.Lighting:GetAttribute("FogStart") then game.Lighting:SetAttribute("FogStart", game.Lighting.FogStart) end
+if not game.Lighting:GetAttribute("FogEnd") then game.Lighting:SetAttribute("FogEnd", game.Lighting.FogEnd) end
+game.Lighting.FogStart = value and 0 or game.Lighting:GetAttribute("FogStart")
+game.Lighting.FogEnd = value and math.huge or game.Lighting:GetAttribute("FogEnd")
+local fog = game.Lighting:FindFirstChildOfClass("Atmosphere")
+if fog then
+if not fog:GetAttribute("Density") then fog:SetAttribute("Density", fog.Density) end
+fog.Density = value and 0 or fog:GetAttribute("Density")
+end
+end)
+end)
 
 
 

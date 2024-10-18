@@ -461,15 +461,13 @@ _G.lasf = v
 end)
 Tab.Exploit:Toggle("Anti-Dread",false,function(v)
 _G.AntiDread = v
-game:GetService("RunService").RenderStepped:Connect(function()
+if _G.AntiDread return end
 if _G.AntiDread then
 local module = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("Dread", true) or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("_Dread", true)
 module.Name = true and "_Dread" or "Dread"
 else
-local module = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("Dread", true) or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("_Dread", true)
 module.Name = false and "_Dread" or "Dread"
 end
-end)
 end)
 Tab.Floors:Label("Fools")
 game:GetService("Workspace").DescendantAdded:Connect(function(v)
@@ -506,6 +504,23 @@ if (v.Name=="JeffTheKiller") then v.Torso.CanTouch=false;end end end end);end);
 Tab.Floors:Toggle("Anti-Jeff",false,function(v)
 _G.antije = v
 end)
+Tab.Floors:Toggle("Anti-Structure",false,function(v)
+flags.nodupe=v;if v then local v2;v2=game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()task.wait();for _,v in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do if (v.Name=="DoorFake") then v.Hidden.CanTouch=false;end end repeat task.wait();until  not v16.nodupe v2:Disconnect();end);end end);
+game:GetService("RunService").RenderStepped:Connect(function()pcall(function()
+if _G.KillJeff then
+for _, jeff in pairs(workspace:GetChildren()) do
+if jeff.Name == "JeffTheKiller" then
+task.spawn(function()
+repeat task.wait() until isnetowner(jeff.PrimaryPart)
+jeff:FindFirstChildOfClass("Humanoid").Health = 0
+end)
+end
+end
+end
+end)
+Tab.Floors:Toggle("FE Kill Jeff",false,function(v)
+_G.KillJeff = v
+end)
 Tab.Floors:Toggle("Godmode",false,function(v)
 if v then
 local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
@@ -515,6 +530,14 @@ local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
 Collison.Position = Collison.Position - Vector3.new(0,-10,0)
 end
 end)
+Tab.Floors:Label("Rooms")
+Tab.Floors:Toggle("Anti-A90",false,function(v)
+flags.noa90 = v
+if v then 
+local v2 = game.ReplicatedStorage:WaitForChild("EntityInfo"):WaitForChild("A90")
+local v3 = 0 local v4 while true do if v3 == 0 then v4 = game.Players.LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Jumpscare"):FindFirstChild("Jumpscare_A90");if v4 then v4.Parent=nil;v2.Parent=nil;repeat task.wait();game.SoundService.Main.Volume=1;until not flags.noa90 v4.Parent= game.Players.LocalPlayers.PlayerGui.MainUI.Jumpscare;v2.Parent=game.ReplicatedStorage:WaitForChild("EntityInfo");end break;end end end end)
+
+
 
 
 Tab:Slider("This is Slider",0,10,0,function(V) end)

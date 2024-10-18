@@ -318,9 +318,9 @@ end)
 Tab.Misc:Toggle("Entities Notifier (Move)",false,function(v)
 if v then
 EntityNotifierMove = workspace.ChildAdded:Connect(function(child)
-if child.Name == "RushNew" and child.Parent.Name == "RushMoving" then
+if child.Name == "RushMoving" then
 Library:Notify("< ! > | YOUHUB","Rush has spawned, find the closet hide now!",Color3.fromRGB(80,80,80),2.5)
-elseif child.Name == "RushNew" and child.Parent.Name == "AmbushMoving" then
+elseif child.Name == "AmbushMoving" then
 Library:Notify("< ! > | YOUHUB","Ambush has spawned, careful with it!",Color3.fromRGB(0,255,0),2.5)
 elseif child.Name == "BackdoorRush" then
 Library:Notify("< ! > | YOUHUB","Blitz has spawned, find the closet hide now!",Color3.fromRGB(0,200,0),2.5)
@@ -328,9 +328,9 @@ elseif child.Name == "SeekNewCloneMoving" then
 Library:Notify("< ! > | YOUHUB","Seek has chase with you, goodluck!",Color3.fromRGB(80,80,80),2.5)
 elseif child.Name == "SeekMoving" then
 Library:Notify("< ! > | YOUHUB","Seek has chase with you, goodluck!",Color3.fromRGB(80,80,80),2.5)
-elseif child.Name == "FigureRig" and checkDistance(child:FindFirstChildWhichIsA("Head"), 15) then
+elseif child.Name == "FigureRig" then
 Library:Notify("< ! > | YOUHUB","Figure near, careful!",Color3.new(1),2.5)
-elseif child.Name == "FigureRagdoll" and checkDistance(child:FindFirstChildWhichIsA("Head"), 15) then
+elseif child.Name == "FigureRagdoll" then
 Library:Notify("< ! > | YOUHUB","Figure near, careful!",Color3.new(1),2.5)
 end
 end)
@@ -503,7 +503,7 @@ for _,v in pairs(game.workspace:GetChildren()) do
 if (v.Name=="JeffTheKiller") then v["Right Leg"].CanTouch=false;end end 
 for _,v in pairs(game.workspace:GetChildren()) do 
 if (v.Name=="JeffTheKiller") then v.Torso.CanTouch=false;end end end end);end);
-Tab2:Toggle("Anti-Jeff",false,function(v)
+Tab.Floors:Toggle("Anti-Jeff",false,function(v)
 _G.antije = v
 end)
 Tab.Floors:Toggle("Godmode",false,function(v)

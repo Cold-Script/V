@@ -12,7 +12,7 @@ local uistroke = Instance.new("UIStroke", txt)
         txt.BackgroundTransparency = 1
         txt.BackgroundColor3 = Color3.new(1,1,1)
         txt.TextColor3 = color
-        txt.Font = "Code"
+        txt.Font = "RobotoMono"
         txt.TextSize = size
         txt.Text = name
         txt.TextTransparency = 0
@@ -33,6 +33,9 @@ local Highlight = Instance.new("Highlight") do
         Highlight.Parent = child
         Highlight.FillColor = color
         Highlight.OutlineColor = color
+	if child:IsA("Part") then
+        child.Transparency = 0
+	end
       end
 end
 local function Clear(name)
@@ -380,6 +383,10 @@ elseif child.Name == "AmbushMoving" and checkDistance(child:FindFirstChildWhichI
 Library:Notify("< ! > | YOUHUB","Ambush has spawned, careful with it!",Color3.fromRGB(0,255,0),2.5)
 elseif child.Name == "BackdoorRush" then
 Library:Notify("< ! > | YOUHUB","Blitz has spawned, find the closet hide now!",Color3.fromRGB(0,200,0),2.5)
+elseif child.Name == "A60" then
+Library:Notify("< ! > | YOUHUB","A-60 has spawned, find the closet hide now!",Color3.fromRGB(255),2.5)
+elseif child.Name == "A120" then
+Library:Notify("< ! > | YOUHUB","A-120 has spawned, find the closet hide now!",Color3.fromRGB(100,100,100),2.5)
 elseif child.Name == "SeekNewCloneMoving" then
 Library:Notify("< ! > | YOUHUB","Seek has chase with you, goodluck!",Color3.fromRGB(80,80,80),2.5)
 elseif child.Name == "SeekMoving" then
@@ -491,13 +498,13 @@ Tab.Visual:Toggle("ESP Key",false,function(v)
 if v then 
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "KeyObtain" then
-Highlight(v, "Key", Color3.fromRGB(80,255,200), "20", "KeyESP")
+Highlight(v, "Key", Color3.fromRGB(255,255,0), "20", "KeyESP")
 end		
 end					
 KeyESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "KeyObtain" then
-Highlight(v, "Key", Color3.fromRGB(80,255,200), "20", "KeyESP")
+Highlight(v, "Key", Color3.fromRGB(255,255), "20", "KeyESP")
 end		
 end	                        
 end)
@@ -529,7 +536,7 @@ Tab.Visual:Toggle("ESP Library Book & Paper Code",false,function(v)
 if v then 
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "LiveHintBook" then
-Highlight(v, "Library Book", Color3.fromRGB(255,150,255), "20", "BookESP")
+Highlight(v, "Book", Color3.fromRGB(255,150,255), "20", "BookESP")
 elseif v.Name == "PickupItem" then
 Highlight(v, "Paper Code", Color3.fromRGB(255,150,255), "20", "BookESP")
 end		
@@ -537,7 +544,7 @@ end
 BookESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "LiveHintBook" then
-Highlight(v, "Library Book", Color3.fromRGB(255,150,255), "20", "BookESP")
+Highlight(v, "Book", Color3.fromRGB(255,150,255), "20", "BookESP")
 elseif v.Name == "PickupItem" then
 Highlight(v, "Paper Code", Color3.fromRGB(255,150,255), "20", "BookESP")
 end		
@@ -571,13 +578,32 @@ Tab.Visual:Toggle("ESP Fuse",false,function(v)
 if v then 
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "FuseObtain" then
-Highlight(v, "Fuse Generator", Color3.fromRGB(80,255,200), "20", "FuseESP")
+Highlight(v, "Fuse Generator", Color3.fromRGB(255,150,255), "20", "AnchorESP")
+end		
+end					
+AnchorESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "FuseObtain" then
+Highlight(v, "Fuse Generator", Color3.fromRGB(255,150,255), "20", "AnchorESP")
+end		
+end	                        
+end)
+else
+AnchorESP:Disconnect()
+Clear("AnchorESP")
+end		
+end)
+Tab.Visual:Toggle("ESP Anchor",false,function(v)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "MinesAnchor" then
+Highlight(v, "Anchor", Color3.fromRGB(80,255,200), "20", "FuseESP")
 end		
 end					
 FuseESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
-if v.Name == "FuseObtain" then
-Highlight(v, "Fuse Generator", Color3.fromRGB(80,255,200), "20", "FuseESP")
+if v.Name == "MinesAnchor" then
+Highlight(v, "Anchor", Color3.fromRGB(80,255,200), "20", "FuseESP")
 end		
 end	                        
 end)
@@ -586,6 +612,72 @@ FuseESP:Disconnect()
 Clear("FuseESP")
 end		
 end)
+Tab.Visual:Toggle("ESP Entity",false,function(v)
+if v then 
+for _,v in pairs(game.workspace:GetDescendants()) do
+if v.Name == "RushMoving" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
+elseif v.Name == "AmbushMoving" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "Ambush", Color3.fromRGB(0,255,0), "50", "GreenESP")
+elseif v.Name == "BackdoorRush" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "Blitz", Color3.fromRGB(255), "50", "RedESP")
+elseif v.Name == "A60" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-60", Color3.fromRGB(255), "50", "RedESP")
+elseif v.Name == "A120" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
+end		
+end		
+for _,v in pairs(game.workspace:GetDescendants()) do
+if v.Name == "Eyes" then
+Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
+elseif v.Name == "FigureSetup" then
+Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
+elseif v.Name == "JeffTheKiller" then
+Highlight(v, "Jeff The Killer", Color3.fromRGB(255,255,255), "25", "WhiteESP")
+elseif v.Name == "BackdoorLookman" then
+Highlight(v, "Lookman", Color3.fromRGB(255), "25", "RedESP")
+end
+end
+EntityESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(child:GetDescendants()) do
+if v.Name == "RushMoving" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
+elseif v.Name == "AmbushMoving" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "Ambush", Color3.fromRGB(0,255,0), "50", "GreenESP")
+elseif v.Name == "BackdoorRush" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "Blitz", Color3.fromRGB(255), "50", "RedESP")
+elseif v.Name == "A60" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-60", Color3.fromRGB(255), "50", "RedESP")
+elseif v.Name == "A120" then
+Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
+end		
+end	        
+for _,v in pairs(game.workspace:GetDescendants()) do
+if v.Name == "Eyes" then
+Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
+elseif v.Name == "FigureSetup" then
+Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
+elseif v.Name == "JeffTheKiller" then
+Highlight(v, "Jeff The Killer", Color3.fromRGB(255,255,255), "25", "WhiteESP")
+elseif v.Name == "Handle" or "GiggleCeiling" then
+Highlight(v, "Giggle", Color3.fromRGB(255,255,255), "25", "WhiteESP")
+elseif v.Name == "Grumbo" then
+Highlight(v, "Grumble", Color3.fromRGB(255,255,255), "25", "WhiteESP")
+elseif v.Name == "BackdoorLookman" then
+Highlight(v, "Lookman", Color3.fromRGB(255), "25", "RedESP")
+end
+end
+end)
+else
+EntityESP:Disconnect()
+Clear("BlackESP")
+Clear("GreenESP")
+Clear("RedESP")
+Clear("BlueESP")
+Clear("WhiteESP")
+end		
+end)
+
 Tab.Visual:Toggle("ESP Closet",false,function(v)
 if v then 
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
@@ -597,6 +689,8 @@ elseif v.Name == "Locker_Large" then
 Highlight(v, "Locker", Color3.fromRGB(80,255,200), "20", "ClosetESP")
 elseif v.Name == "Rooms_Locker" then
 Highlight(v, "Locker", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+elseif v.Name == "Bed" then
+Highlight(v, "Bed", Color3.fromRGB(80,255,200), "20", "ClosetESP")
 end		
 end					
 ClosetESP = workspace.ChildAdded:Connect(function(child)                       
@@ -609,6 +703,8 @@ elseif v.Name == "Locker_Large" then
 Highlight(v, "Locker", Color3.fromRGB(80,255,200), "20", "ClosetESP")
 elseif v.Name == "Rooms_Locker" then
 Highlight(v, "Locker", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+elseif v.Name == "Bed" then
+Highlight(v, "Bed", Color3.fromRGB(80,255,200), "20", "ClosetESP")
 end		
 end	                        
 end)
@@ -637,6 +733,7 @@ DupeESP:Disconnect()
 Clear("DupeESP")
 end		
 end)
+
 game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function()
 pcall(function()
 if _G.AntiEyes then if workspace:FindFirstChild("Eyes") then 
@@ -671,7 +768,7 @@ game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(false)
 end
 end)   
 game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()if _G.SeekChase then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("TiggerEventCollision") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do if (v.Name=="TriggerEventCollision") then v:Destroy();end end end end end);end);
+pcall(function()if _G.SeekChase then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("TiggerEventCollision") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetChildren()) do if (v.Name=="TriggerEventCollision") then v:Destroy();end end end end end);end);
 Tab.Exploit:Toggle("Anti-Seek Trigger",false,function(v)_G.SeekChase = v;end)
 game:GetService("RunService").RenderStepped:Connect(function()pcall(function()
 if _G.lasf then 

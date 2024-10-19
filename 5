@@ -1,4 +1,47 @@
-
+local function Billboard(child, name, color, size, title)
+local bill = Instance.new("BillboardGui",child) do
+local txt = Instance.new("TextLabel",bill)
+local uistroke = Instance.new("UIStroke", txt)
+        bill.AlwaysOnTop = true
+        bill.Size = UDim2.new(0,400,0,100)
+        bill.Adornee = child
+        bill.Name = title
+        bill.Active = true
+        bill.AlwaysOnTop = true
+        txt.AnchorPoint = Vector2.new(0.5,0.5)
+        txt.BackgroundTransparency = 1
+        txt.BackgroundColor3 = Color3.new(1,1,1)
+        txt.TextColor3 = color
+        txt.Font = "Code"
+        txt.TextSize = size
+        txt.Text = name
+        txt.TextTransparency = 0
+        txt.Visible = true
+        txt.Size = UDim2.new(1,0,0,0)
+        txt.Position = UDim2.new(0.5,0,0.7,-35)
+        uistroke.Thickness = 1.25
+        uistroke.Color = Color3.new(0,0,0)
+      end
+end
+local function Highlight(child, name, color, size, title)
+Billboard(child, name, color, size, title)
+local Highlight = Instance.new("Highlight") do
+        Highlight.FillTransparency = 0.75
+        Highlight.OutlineTransparency = 0
+        Highlight.Name = title
+        Highlight.Adornee = child
+        Highlight.Parent = child
+        Highlight.FillColor = color
+        Highlight.OutlineColor = color
+      end
+end
+local function Clear(name)
+for _,v in pairs(workspace:GetDescendants()) do
+if v.Name == name then
+v:Destroy()
+end
+end
+end
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Cold-Script/BF/refs/heads/main/WhiteLib.lua'))()
 local Window = Library:Window("[ ALPHA ] DOORS YOUHUB V5")
 local Tab = {
@@ -422,6 +465,26 @@ if not fog:GetAttribute("Density") then fog:SetAttribute("Density", fog.Density)
 fog.Density = value and 0 or fog:GetAttribute("Density")
 end
 end)
+end)
+Tab.Visual:Label("ESP")
+Tab.Visual:Toggle("ESP Doors",false,function(v)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "Door" and v.Parent.Name == "Door" then
+Highlight(v, "Door " .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
+end		
+end					
+DoorESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "Door" and v.Parent.Name == "Door" then
+Highlight(v, "Door " .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
+end
+end                        
+end)
+else
+DoorESP:Disconnect()
+ClearESP("DoorESP")
+end		
 end)
 game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function()
 pcall(function()

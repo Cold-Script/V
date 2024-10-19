@@ -506,6 +506,137 @@ KeyESP:Disconnect()
 Clear("KeyESP")
 end		
 end)
+Tab.Visual:Toggle("ESP Generator",false,function(v)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "MinesGenerator" then
+Highlight(v, "Generator", Color3.fromRGB(80,255,200), "20", "GenratorESP")
+end		
+end					
+GenratorESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "MinesGenerator" then
+Highlight(v, "Generator", Color3.fromRGB(80,255,200), "20", "GenratorESP")
+end		
+end	                        
+end)
+else
+GenratorESP:Disconnect()
+Clear("GenratorESP")
+end		
+end)
+Tab.Visual:Toggle("ESP Library Book & Paper Code",false,function(v)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+Highlight(v, "Library Book", Color3.fromRGB(255,150,255), "20", "BookESP")
+elseif v.Name == "PickupItem" then
+Highlight(v, "Paper Code", Color3.fromRGB(255,150,255), "20", "BookESP")
+end		
+end					
+BookESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "LiveHintBook" then
+Highlight(v, "Library Book", Color3.fromRGB(255,150,255), "20", "BookESP")
+elseif v.Name == "PickupItem" then
+Highlight(v, "Paper Code", Color3.fromRGB(255,150,255), "20", "BookESP")
+end		
+end	                        
+end)
+else
+BookESP:Disconnect()
+Clear("BookESP")
+end		
+end)
+Tab.Visual:Toggle("ESP Breaker",false,function(v)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "LiveBreakerPolePickup" then
+Highlight(v, "Breaker Electric", Color3.fromRGB(100,100,100), "20", "BreakerESP")
+end		
+end					
+BreakerESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "LiveBreakerPolePickup" then
+Highlight(v, "Breaker Electric", Color3.fromRGB(100,100,100), "20", "BreakerESP")
+end		
+end	                        
+end)
+else
+BreakerESP:Disconnect()
+Clear("BreakerESP")
+end		
+end)
+Tab.Visual:Toggle("ESP Fuse",false,function(v)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "FuseObtain" then
+Highlight(v, "Fuse Generator", Color3.fromRGB(80,255,200), "20", "FuseESP")
+end		
+end					
+FuseESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "FuseObtain" then
+Highlight(v, "Fuse Generator", Color3.fromRGB(80,255,200), "20", "FuseESP")
+end		
+end	                        
+end)
+else
+FuseESP:Disconnect()
+Clear("FuseESP")
+end		
+end)
+Tab.Visual:Toggle("ESP Closet",false,function(v)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "Wardrobe" then
+Highlight(v, "Wardrobe", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+elseif v.Name == "Backdoor_Wardrobe" then
+Highlight(v, "Wardrobe", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+elseif v.Name == "Locker_Large" then
+Highlight(v, "Locker", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+elseif v.Name == "Rooms_Locker" then
+Highlight(v, "Locker", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+end		
+end					
+ClosetESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "Wardrobe" then
+Highlight(v, "Wardrobe", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+elseif v.Name == "Backdoor_Wardrobe" then
+Highlight(v, "Wardrobe", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+elseif v.Name == "Locker_Large" then
+Highlight(v, "Locker", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+elseif v.Name == "Rooms_Locker" then
+Highlight(v, "Locker", Color3.fromRGB(80,255,200), "20", "ClosetESP")
+end		
+end	                        
+end)
+else
+ClosetESP:Disconnect()
+Clear("ClosetESP")
+end		
+end)
+
+Tab.Visual:Toggle("ESP Dupe",false,function(v)
+if v then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "DoorFake" then
+Highlight(v, "Dupe", Color3.fromRGB(255), "20", "DupeESP")
+end		
+end					
+DupeESP = workspace.ChildAdded:Connect(function(child)                       
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "DoorFake" then
+Highlight(v, "Dupe", Color3.fromRGB(255), "20", "DupeESP")
+end		
+end	                        
+end)
+else
+DupeESP:Disconnect()
+Clear("DupeESP")
+end		
+end)
 game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function()
 pcall(function()
 if _G.AntiEyes then if workspace:FindFirstChild("Eyes") then 

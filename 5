@@ -479,6 +479,81 @@ else
 module.Name = false and "_Dread" or "Dread"
 end
 end)
+Tab.Floors:Label("Backdoors")
+game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function()
+pcall(function()
+if _G.AntiLookman then if workspace:FindFirstChild("BackdoorLookman") then 
+game:GetService("ReplicatedStorage").EntityInfo.MotorReplication:FireServer(0,(_G.AntiEyes and 120) or 0 ,0,false);
+end end end);end);
+Tab.Floors:Toggle("Anti-Lookman",false,function(v)
+_G.AntiLookman = v
+end)
+Tab.Floors:Label("Hotel")
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()if _G.SeekArm then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Seek_Arm") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do if (v.Name=="Seek_Arm") then v.AnimatorPart.CanTouch=false;end end end end end);end);game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()if _G.SeekFire then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("ChandelierObstruction") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do if (v.Name=="ChandelierObstruction") then v.HurtPart.CanTouch=false;end end end end end);end);
+Tab.Floors:Toggle("Anti-Seek Arm",false,function(v)
+_G.SeekArm = v
+end)
+Tab.Floors:Toggle("Anti-Fire",false,function(v)
+_G.SeekFire = v
+end)
+Tab.Floors:Label("Mines")
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()if _G.AntiMinecart then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("MinecartCollision") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do if (v.Name=="MinecartCollision") then v:Destroy();end end end end end);end);
+Tab.Floors:Toggle("Anti-Minecart Trigger",false,function(v)
+_G.AntiMinecart = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()if _G.AntiGloomEgg then
+for _, room in pairs(workspace.CurrentRooms:GetChildren()) do
+for _, gloomPile in pairs(room:GetChildren()) do
+if gloomPile.Name == "GloomPile" then
+for _, gloomEgg in pairs(gloomPile:GetDescendants()) do
+if gloomEgg.Name == "Egg" then
+gloomEgg.CanTouch = not true
+end
+end
+end
+end
+end
+end
+end)
+end)
+Tab.Floors:Toggle("Anti-Gloom (Egg)",false,function(v)
+_G.AntiGloomEgg = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()if _G.AntiGiggle then
+for _, room in pairs(workspace.CurrentRooms:GetChildren()) do
+for _, giggle in pairs(room:GetChildren()) do
+if giggle.Name == "GiggleCeiling" then
+giggle:WaitForChild("Hitbox", 5).CanTouch = not true
+end
+end
+end
+end
+end)
+end)
+Tab.Floors:Toggle("Anti-Giggle",false,function(v)
+_G.AntiGiggle = v
+end)
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()if _G.AntiDam then
+local room = workspace.CurrentRooms:FindFirstChild("100")
+if room and room:FindFirstChild("_DamHandler") then
+local seekFlood = room._DamHandler:FindFirstChild("SeekFloodline")
+if seekFlood then
+seekFlood.CanCollide = false
+seekFlood.CanTouch = false
+end
+end
+end
+end)
+end)
+Tab.Floors:Toggle("Anti-Seek Flood",false,function(v)
+_G.AntiDam = v
+end)
 Tab.Floors:Label("Fools")
 game:GetService("Workspace").DescendantAdded:Connect(function(v)
 if not _G.AntiBanana then return end

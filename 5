@@ -508,13 +508,13 @@ Tab.Visual:Toggle("ESP Key",false,function(v)
 if v then 
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "KeyObtain" then
-Highlight(v, "Key\n" .. workspace.Door.RoomID, Color3.fromRGB(80,255,200), "20", "KeyESP")
+Highlight(v, "Key\n", Color3.fromRGB(80,255,200), "20", "KeyESP")
 end		
 end					
 KeyESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "KeyObtain" then
-Highlight(v, "Key\n" .. workspace.Door.RoomID, Color3.fromRGB(80,255,200), "20", "KeyESP")
+Highlight(v, "Key\n", Color3.fromRGB(80,255,200), "20", "KeyESP")
 end		
 end	                        
 end)

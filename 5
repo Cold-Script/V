@@ -295,24 +295,7 @@ game:GetService("ReplicatedStorage").EntityInfo.CamLock:FireServer()end end)
 Tab.Misc:Toggle("Closet Exit Fixed",false,function(v)
 _G.FastCloset = v
 end)
-game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()
-if _G.FastOpenDoor then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door"):GetAttribute("FastOpen")==true
-end 
-end)
-end)
-Tab.Misc:Toggle("Fast Door",false,function(v)
-_G.FastOpenDoor = v
-end)
-game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()
-if _G.SeeThroughDoor then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door"):GetAttribute("SeeThrough")==true
-end 
-end)
-end)
-Tab.Misc:Toggle("See Through Door",false,function(v)
-_G.SeeThroughDoor = v
-end)
+
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()
 if _G.OpenDoorFar then game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Door").ClientOpen:FireServer()
@@ -489,13 +472,13 @@ Tab.Visual:Toggle("ESP Doors",false,function(v)
 if v then 
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
-Highlight(v, "Door\n" .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
+Highlight(v, "Door " .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
 end		
 end					
 DoorESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
-Highlight(v, "Door\n" .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
+Highlight(v, "Door " .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
 end
 end                        
 end)
@@ -508,13 +491,13 @@ Tab.Visual:Toggle("ESP Key",false,function(v)
 if v then 
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "KeyObtain" then
-Highlight(v, "Key\n", Color3.fromRGB(80,255,200), "20", "KeyESP")
+Highlight(v, "Key", Color3.fromRGB(80,255,200), "20", "KeyESP")
 end		
 end					
 KeyESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "KeyObtain" then
-Highlight(v, "Key\n", Color3.fromRGB(80,255,200), "20", "KeyESP")
+Highlight(v, "Key", Color3.fromRGB(80,255,200), "20", "KeyESP")
 end		
 end	                        
 end)

@@ -26,13 +26,15 @@ end
 local function Highlight(child, name, color, size, title)
 Billboard(child, name, color, size, title)
 local Highlight = Instance.new("Highlight") do
-        Highlight.FillTransparency = 0.75
+        Highlight.FillTransparency = 0.5
         Highlight.OutlineTransparency = 0
         Highlight.Name = title
         Highlight.Adornee = child
         Highlight.Parent = child
         Highlight.FillColor = color
         Highlight.OutlineColor = color
+	Highlight.Visible = true
+        Highlight.Enabled = true
 	if child:IsA("Part") then
         child.Transparency = 0
 	end
@@ -634,8 +636,8 @@ elseif v.Name == "FigureSetup" then
 Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "JeffTheKiller" then
 Highlight(v, "Jeff The Killer", Color3.fromRGB(255,255,255), "25", "WhiteESP")
-elseif v.Name == "Handle" and v.Parent.Name == "GiggleCeiling" then
-Highlight(v, "Giggle", Color3.fromRGB(255,255,255), "25", "WhiteESP")
+elseif v.Name == "GiggleCeiling" then
+Highlight(v, "", Color3.fromRGB(255,255,255), "25", "WhiteESP")
 elseif v.Name == "Grumbo" then
 Highlight(v, "Grumble", Color3.fromRGB(255,255,255), "25", "WhiteESP")
 elseif v.Name == "BackdoorLookman" then
@@ -656,15 +658,15 @@ elseif v.Name == "A120" then
 Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
 end		
 end	        
-for _,v in pairs(game.workspace:GetDescendants()) do
+for _,v in pairs(child:GetDescendants()) do
 if v.Name == "Eyes" then
 Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
 elseif v.Name == "FigureSetup" then
 Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "JeffTheKiller" then
 Highlight(v, "Jeff The Killer", Color3.fromRGB(255,255,255), "25", "WhiteESP")
-elseif v.Name == "Handle" and v.Parent.Name == "GiggleCeiling" then
-Highlight(v, "Giggle", Color3.fromRGB(255,255,255), "25", "WhiteESP")
+elseif v.Name == "GiggleCeiling" then
+Highlight(v, "", Color3.fromRGB(255,255,255), "25", "WhiteESP")
 elseif v.Name == "Grumbo" then
 Highlight(v, "Grumble", Color3.fromRGB(255,255,255), "25", "WhiteESP")
 elseif v.Name == "BackdoorLookman" then

@@ -1,5 +1,16 @@
+function checkDistance(part, extra)
+	if not extra then extra = 15 end
+	if not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not part then
+		return false
+	end
+	local distanceToPart = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).magnitude
+	if distanceToPart <= extra then
+		return true
+	end
+	return false
+end
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Cold-Script/BF/refs/heads/main/WhiteLib.lua'))()
-local Window = Library:Window("YOUHUB | V5")
+local Window = Library:Window("[ ALPHA ] DOORS YOUHUB V5")
 local Tab = {
       Main = Window:Tab("Main","rbxassetid://11826465934"),
       Misc = Window:Tab("Miscellaneous","rbxassetid://11826465934"),
@@ -318,9 +329,9 @@ end)
 Tab.Misc:Toggle("Entities Notifier (Move)",false,function(v)
 if v then
 EntityNotifierMove = workspace.ChildAdded:Connect(function(child)
-if child.Name == "RushMoving" then
+if child.Name == "RushMoving" and checkDistance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
 Library:Notify("< ! > | YOUHUB","Rush has spawned, find the closet hide now!",Color3.fromRGB(80,80,80),2.5)
-elseif child.Name == "AmbushMoving" then
+elseif child.Name == "AmbushMoving" and checkDistance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
 Library:Notify("< ! > | YOUHUB","Ambush has spawned, careful with it!",Color3.fromRGB(0,255,0),2.5)
 elseif child.Name == "BackdoorRush" then
 Library:Notify("< ! > | YOUHUB","Blitz has spawned, find the closet hide now!",Color3.fromRGB(0,200,0),2.5)
@@ -461,7 +472,6 @@ _G.lasf = v
 end)
 Tab.Exploit:Toggle("Anti-Dread",false,function(v)
 _G.AntiDread = v
-if _G.AntiDread return end
 if _G.AntiDread then
 local module = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("Dread", true) or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("MainUI"):WaitForChild("Initiator"):WaitForChild("Main_Game"):FindFirstChild("_Dread", true)
 module.Name = true and "_Dread" or "Dread"
@@ -517,6 +527,7 @@ end)
 end
 end
 end
+end)
 end)
 Tab.Floors:Toggle("FE Kill Jeff",false,function(v)
 _G.KillJeff = v

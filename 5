@@ -33,11 +33,6 @@ local Highlight = Instance.new("Highlight") do
         Highlight.Parent = child
         Highlight.FillColor = color
         Highlight.OutlineColor = color
-	Highlight.Visible = true
-        Highlight.Enabled = true
-	if child:IsA("Part") then
-        child.Transparency = 0
-	end
       end
 end
 local function Clear(name)
@@ -109,7 +104,7 @@ bg.P = 1000
 bg.D = 50
 end)
 local camera = Workspace.CurrentCamera
-local speed = 25
+local speed = 35
 local Signal2
 Signal2 = rs.RenderStepped:Connect(function()
 if Lp.Character and Lp.Character:FindFirstChildOfClass("Humanoid") and Lp.Character.Humanoid.RootPart and Lp.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and Lp.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
@@ -483,13 +478,23 @@ for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("Replicate
 if v.Name == "Door" and v.Parent.Name == "Door" then
 Highlight(v, "Door " .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
 end		
-end					
+end	
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "RoomsDoor_Entrance" then
+Highlight(v, "Door (The Rooms)", Color3.fromRGB(80,255,200), "20", "DoorESP")
+end		
+end	
 DoorESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
 Highlight(v, "Door " .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
 end
-end                        
+end
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "RoomsDoor_Entrance" then
+Highlight(v, "Door (The Rooms)", Color3.fromRGB(80,255,200), "20", "DoorESP")
+end		
+end	
 end)
 else
 DoorESP:Disconnect()
@@ -616,23 +621,24 @@ end
 end)
 Tab.Visual:Toggle("ESP Entity",false,function(v)
 if v then 
-for _,v in pairs(game.workspace:GetDescendants()) do
+for _,v in pairs(workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
+Highlight(v, "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
 elseif v.Name == "AmbushMoving" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "Ambush", Color3.fromRGB(0,255,0), "50", "GreenESP")
+Highlight(v, "Ambush", Color3.fromRGB(0,255,0), "50", "GreenESP")
 elseif v.Name == "BackdoorRush" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "Blitz", Color3.fromRGB(255), "50", "RedESP")
+Highlight(v, "Blitz", Color3.fromRGB(255), "50", "RedESP")
 elseif v.Name == "A60" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-60", Color3.fromRGB(255), "50", "RedESP")
+Highlight(v, "A-60", Color3.fromRGB(255), "50", "RedESP")
 elseif v.Name == "A120" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
-end		
-end		
+Highlight(v, "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
+end	
 for _,v in pairs(game.workspace:GetDescendants()) do
 if v.Name == "Eyes" then
 Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
-elseif v.Name == "FigureSetup" then
+elseif v.Name == "FigureRig" then
+Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
+elseif v.Name == "FigureRagdoll" then
 Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "JeffTheKiller" then
 Highlight(v, "Jeff The Killer", Color3.fromRGB(255,255,255), "25", "WhiteESP")
@@ -647,15 +653,15 @@ end
 EntityESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(child:GetDescendants()) do
 if v.Name == "RushMoving" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
+Highlight(v, "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
 elseif v.Name == "AmbushMoving" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "Ambush", Color3.fromRGB(0,255,0), "50", "GreenESP")
+Highlight(v, "Ambush", Color3.fromRGB(0,255,0), "50", "GreenESP")
 elseif v.Name == "BackdoorRush" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "Blitz", Color3.fromRGB(255), "50", "RedESP")
+Highlight(v, "Blitz", Color3.fromRGB(255), "50", "RedESP")
 elseif v.Name == "A60" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-60", Color3.fromRGB(255), "50", "RedESP")
+Highlight(v, "A-60", Color3.fromRGB(255), "50", "RedESP")
 elseif v.Name == "A120" then
-Highlight(v:FindFirstChildWhichIsA("BasePart"), "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
+Highlight(v, "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
 end		
 end	        
 for _,v in pairs(child:GetDescendants()) do
@@ -797,6 +803,7 @@ else
 module.Name = false and "_Dread" or "Dread"
 end
 end)
+if game:GetService("ReplicatedStorage"):WaitForChild("GameData"):WaitForChild("Floor").Value == "Backdoor" then
 Tab.Floors:Label("Backdoors")
 game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function()
 pcall(function()
@@ -806,6 +813,7 @@ end end end);end);
 Tab.Floors:Toggle("Anti-Lookman",false,function(v)
 _G.AntiLookman = v
 end)
+end
 Tab.Floors:Label("Hotel")
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()if _G.SeekArm then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Seek_Arm") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do if (v.Name=="Seek_Arm") then v.AnimatorPart.CanTouch=false;end end end end end);end);game:GetService("RunService").RenderStepped:Connect(function()
@@ -816,6 +824,7 @@ end)
 Tab.Floors:Toggle("Anti-Fire",false,function(v)
 _G.SeekFire = v
 end)
+if game:GetService("ReplicatedStorage"):WaitForChild("GameData"):WaitForChild("Floor").Value == "Mines" then
 Tab.Floors:Label("Mines")
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()if _G.AntiMinecart then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("MinecartCollision") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetDescendants()) do if (v.Name=="MinecartCollision") then v:Destroy();end end end end end);end);
@@ -872,6 +881,8 @@ end)
 Tab.Floors:Toggle("Anti-Seek Flood",false,function(v)
 _G.AntiDam = v
 end)
+end
+if game:GetService("ReplicatedStorage"):WaitForChild("GameData"):WaitForChild("Floor").Value == "Fools" then
 Tab.Floors:Label("Fools")
 game:GetService("Workspace").DescendantAdded:Connect(function(v)
 if not _G.AntiBanana then return end
@@ -888,6 +899,7 @@ Tab.Floors:Toggle("Anti-Banana",false,function(v)
 _G.AntiBanana = v
 end)
 game:GetService("RunService").RenderStepped:Connect(function()pcall(function()
+wait(0.5)
 if _G.antije then for _,v in pairs(game.workspace:GetChildren()) do 
 if (v.Name=="JeffTheKiller") then v.Knife.CanTouch=false v.Knife.CanCollide=false;end end 
 for _,v in pairs(game.workspace:GetChildren()) do 
@@ -909,19 +921,7 @@ _G.antije = v
 end)
 Tab.Floors:Toggle("Anti-Structure",false,function(v)
 flags.nodupe=v;if v then local v2;v2=game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()task.wait();for _,v in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do if (v.Name=="DoorFake") then v.Hidden.CanTouch=false;end end repeat task.wait();until  not v16.nodupe v2:Disconnect();end);end end);
-game:GetService("RunService").RenderStepped:Connect(function()pcall(function()
-if _G.KillJeff then
-for _, jeff in pairs(workspace:GetChildren()) do
-if jeff.Name == "JeffTheKiller" then
-jeff.Humanoid.Health = 0
-end
-end
-end
-end)
-end)
-Tab.Floors:Toggle("FE Kill Jeff",false,function(v)
-_G.KillJeff = v
-end)
+
 Tab.Floors:Toggle("Godmode",false,function(v)
 if v then
 local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
@@ -931,7 +931,8 @@ local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
 Collison.Position = Collison.Position - Vector3.new(0,-10,0)
 end
 end)
-Tab.Floors:Label("Rooms")
+end
+Tab.Floors:Label("Other")
 Tab.Floors:Toggle("Anti-A90",false,function(v)
 flags.noa90 = v
 if v then 

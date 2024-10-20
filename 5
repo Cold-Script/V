@@ -803,7 +803,6 @@ else
 module.Name = false and "_Dread" or "Dread"
 end
 end)
-if game:GetService("ReplicatedStorage"):WaitForChild("GameData"):WaitForChild("Floor").Value == "Backdoor" then
 Tab.Floors:Label("Backdoors")
 game:GetService("Workspace").CurrentRooms.DescendantAdded:Connect(function()
 pcall(function()
@@ -813,7 +812,6 @@ end end end);end);
 Tab.Floors:Toggle("Anti-Lookman",false,function(v)
 _G.AntiLookman = v
 end)
-end
 Tab.Floors:Label("Hotel")
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()if _G.SeekArm then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("Seek_Arm") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetChildren()) do if (v.Name=="Seek_Arm") then v.AnimatorPart.CanTouch=false;end end end end end);end);game:GetService("RunService").RenderStepped:Connect(function()
@@ -824,7 +822,6 @@ end)
 Tab.Floors:Toggle("Anti-Fire",false,function(v)
 _G.SeekFire = v
 end)
-if game:GetService("ReplicatedStorage"):WaitForChild("GameData"):WaitForChild("Floor").Value == "Mines" then
 Tab.Floors:Label("Mines")
 game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()if _G.AntiMinecart then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("MinecartCollision") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetDescendants()) do if (v.Name=="MinecartCollision") then v:Destroy();end end end end end);end);
@@ -881,8 +878,6 @@ end)
 Tab.Floors:Toggle("Anti-Seek Flood",false,function(v)
 _G.AntiDam = v
 end)
-end
-if game:GetService("ReplicatedStorage"):WaitForChild("GameData"):WaitForChild("Floor").Value == "Fools" then
 Tab.Floors:Label("Fools")
 game:GetService("Workspace").DescendantAdded:Connect(function(v)
 if not _G.AntiBanana then return end
@@ -931,7 +926,6 @@ local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
 Collison.Position = Collison.Position - Vector3.new(0,-10,0)
 end
 end)
-end
 Tab.Floors:Label("Other")
 Tab.Floors:Toggle("Anti-A90",false,function(v)
 flags.noa90 = v

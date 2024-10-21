@@ -364,14 +364,14 @@ Tab.Misc:Toggle("Entities Notifier (Look)",false,function(v)
 if v then
 EntityNotifierLook = workspace.ChildAdded:Connect(function(child)
 if child.Name == "Eyes" then
-Library:Notify("< ! > | YOUHUB","Eyes has spawned, dont look at it!",Color3.new(0,0,1),2.5)
+Library:Notify("< ! > | YOUHUB","Eyes has spawned, dont look at it!",Color3.new(0,0,1), 2.5)
 elseif child.Name == "BackdoorLookman" then
-Library:Notify("< ! > | YOUHUB","Lookman has spawned, dont look at it!",Color3.fromRGB(80,80,80),2.5)
+Library:Notify("< ! > | YOUHUB","Lookman has spawned, dont look at it!",Color3.fromRGB(80,80,80), 2.5)
 end
 end)
 EntityNotifierScreech = workspace.CurrentCamera.ChildAdded:Connect(function(child)
 if child.Name == "Screech" then
-Library:Notify("< ! > | YOUHUB","Screech has spawned, look at it!",Color3.fromRGB(80,80,80),2.5)
+Library:Notify("< ! > | YOUHUB","Screech has spawned, look at it!",Color3.fromRGB(80,80,80), 2.5)
 end
 end)
 else
@@ -932,7 +932,7 @@ game:GetService("Workspace").DescendantAdded:Connect(function()
 if _G.GodmodeFigure then
 wait(1)
 V = false
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+for _,v in pairs(game.workspace.CurrentRooms["50" or "100"]:GetDescendants()) do
 if v.Name == "Head" and v.Parent.Name == "FigureRagdoll" then
 v.CanTouch = V
 v.CanCollide = V
@@ -1014,6 +1014,16 @@ else
 local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
 Collison.Position = Collison.Position - Vector3.new(0,-10,0)
 end
+end)
+Tab.Floors:Toggle("Auto Revive",false,function(v)
+_G.AutoRevive = v
+game:GetService("RunService").RenderStepped:Connect(function()
+pcall(function()
+if game.Players.LocalPlayer.Character.Humanoid.Health == 0 and _G.AutoRevive then
+game:GetService("ReplicatedStorage").EntityInfo.Revive:FireServer()
+end
+end)
+end)
 end)
 Tab.Floors:Label("Other")
 Tab.Floors:Toggle("Anti-A90",false,function(v)

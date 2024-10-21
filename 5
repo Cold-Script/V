@@ -775,13 +775,14 @@ game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(false)
 end
 end)   
 game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()if _G.SeekChase then
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants())
-if v.Name == "TriggerEventCollision" then
+if _G.SeekChase then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "TriggerEventCollsion" then
 v:Destroy()
 end
 end
-end end);end);
+end
+end)
 Tab.Exploit:Toggle("Anti-Seek Trigger",false,function(v)_G.SeekChase = v;end)
 game:GetService("RunService").RenderStepped:Connect(function()pcall(function()
 if _G.lasf then 
@@ -825,13 +826,14 @@ _G.SeekFire = v
 end)
 Tab.Floors:Label("Mines")
 game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()if _G.AntiMinecart then 
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants())
-if v.Name == "MinescarftCollision" then
+if _G.AntiMinecart then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
+if v.Name == "MinecartCollision" then
 v:Destroy()
 end
 end
-end end);end);
+end
+end)
 Tab.Floors:Toggle("Anti-Minecart Trigger",false,function(v)
 _G.AntiMinecart = v
 end)

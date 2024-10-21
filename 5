@@ -33,7 +33,6 @@ local Highlight = Instance.new("Highlight") do
         Highlight.Parent = child
         Highlight.FillColor = color
         Highlight.OutlineColor = color
-	Highlight.Visible = true
       end
 end
 local function Clear(name)
@@ -48,6 +47,7 @@ local Window = Library:Window("[ ALPHA ] DOORS YOUHUB V5")
 local Tab = {
       Main = Window:Tab("Main","rbxassetid://11826465934"),
       Misc = Window:Tab("Miscellaneous","rbxassetid://11826465934"),
+      Troll = Window:Tab("Troll","rbxassetid://11826465934"),
       Exploit = Window:Tab("Exploit","rbxassetid://11826465934"),
       Visual = Window:Tab("Visual","rbxassetid://11826465934"),
       Floors = Window:Tab("Floors","rbxassetid://11826465934")
@@ -434,6 +434,23 @@ Library:Notify("< ! > | YOUHUB","Leave is loading...",Color3.new(1,1,1),2.5)
 wait(3)
 game:Shutdown()
 end)
+Tab.Troll:Toggle("Spin",false,function(v)
+game:GetService("RunService").RenderStepped:Connect(function()
+for _,v in pairs(game.Players.LocalPlayer:GetDescendants()) do
+v:PivotTo(v:GetPivot() * CFrame.new(0, 0, 0) * CFrame.Angles(0, math.rad(10), 0))
+end
+end)
+end)
+Tab.Troll:Toggle("Stunned",false,function(v)
+game.Players.LocalPlayer.Character.Humanoid.Stunned = v
+end)
+Tab.Troll:Toggle("Ground",false,function(v)
+if v then
+game.Players.LocalPlayer.Character.Humanoid.HipHeight = 0
+else
+game.Players.LocalPlayer.Character.Humanoid.HipHeight = 2.18
+end
+end)
 Tab.Visual:Slider("Field Of View",70,120,0,function(v)
 _G.FieldOfView = v
 end)
@@ -627,10 +644,7 @@ elseif v.Name == "A60" then
 Highlight(v, "A-60", Color3.fromRGB(255), "50", "RedESP")
 elseif v.Name == "A120" then
 Highlight(v, "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
-end	
-end
-for _,v in pairs(game.workspace:GetDescendants()) do
-if v.Name == "Eyes" then
+elseif v.Name == "Eyes" then
 Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
 elseif v.Name == "FigureRig" then
 Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
@@ -658,10 +672,7 @@ elseif v.Name == "A60" then
 Highlight(v, "A-60", Color3.fromRGB(255), "50", "RedESP")
 elseif v.Name == "A120" then
 Highlight(v, "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
-end		
-end	        
-for _,v in pairs(game.workspace:GetDescendants()) do
-if v.Name == "Eyes" then
+elseif v.Name == "Eyes" then
 Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
 elseif v.Name == "FigureSetup" then
 Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
@@ -931,6 +942,7 @@ _G.Godmode = v
 _G.GodmodeFigure = v
 game:GetService("Workspace").DescendantAdded:Connect(function()
 if _G.GodmodeFigure then
+wait(1)
 V = false
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "Head" and v.Parent.Name == "FigureRagdoll" then

@@ -52,7 +52,7 @@ local Tab = {
       Floors = Window:Tab("Floors","rbxassetid://11826465934")
 }
 local flags = {hintrush=false,hintrushhee=false,light=false,instapp=false,noseek=false,nogates=false,nopuzzle=false,noa90=false,noskeledoors=false,noseekarmsfire=false,noscreech=false,nodupe=false,getcode=false,getcodet=false,roomsnolock=false,draweraura=false,autorooms=false,itemsaura=false,autopulllever=false,bookcollecter=false,breakercollecter=false}
-Tab.Main:Slider("Speed",16,30,0,function(v)
+Tab.Main:Slider("Speed",16,50,0,function(v)
 _G.Speed = v or 16
 end)
 Tab.Main:Toggle("Enabled Speed",false,function(v)
@@ -615,7 +615,7 @@ end
 end)
 Tab.Visual:Toggle("ESP Entity",false,function(v)
 if v then 
-for _,v in pairs(workspace:GetDescendants()) do
+for _,v in pairs(game.workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
 Highlight(v, "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
 elseif v.Name == "AmbushMoving" then
@@ -646,7 +646,7 @@ Highlight(v, "Lookman", Color3.fromRGB(255), "25", "RedESP")
 end
 end
 EntityESP = workspace.ChildAdded:Connect(function(child)                       
-for _,v in pairs(child:GetDescendants()) do
+for _,v in pairs(game.workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
 Highlight(v, "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
 elseif v.Name == "AmbushMoving" then
@@ -659,7 +659,7 @@ elseif v.Name == "A120" then
 Highlight(v, "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
 end		
 end	        
-for _,v in pairs(child:GetDescendants()) do
+for _,v in pairs(game.workspace:GetDescendants()) do
 if v.Name == "Eyes" then
 Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
 elseif v.Name == "FigureSetup" then
@@ -775,7 +775,13 @@ game:GetService("ReplicatedStorage").EntityInfo.Crouch:FireServer(false)
 end
 end)   
 game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()if _G.SeekChase then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("TiggerEventCollision") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do if (v.Name=="TriggerEventCollision") then v:Destroy();end end end end end);end);
+pcall(function()if _G.SeekChase then
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants())
+if v.Name == "TriggerEventCollision" then
+v:Destroy()
+end
+end
+end end);end);
 Tab.Exploit:Toggle("Anti-Seek Trigger",false,function(v)_G.SeekChase = v;end)
 game:GetService("RunService").RenderStepped:Connect(function()pcall(function()
 if _G.lasf then 
@@ -819,7 +825,13 @@ _G.SeekFire = v
 end)
 Tab.Floors:Label("Mines")
 game:GetService("RunService").RenderStepped:Connect(function()
-pcall(function()if _G.AntiMinecart then if game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):FindFirstChild("MinecartCollision") then for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets"):GetDescendants()) do if (v.Name=="MinecartCollision") then v:Destroy();end end end end end);end);
+pcall(function()if _G.AntiMinecart then 
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants())
+if v.Name == "MinescarftCollision" then
+v:Destroy()
+end
+end
+end end);end);
 Tab.Floors:Toggle("Anti-Minecart Trigger",false,function(v)
 _G.AntiMinecart = v
 end)
@@ -911,9 +923,90 @@ _G.antije = v
 end)
 Tab.Floors:Toggle("Anti-Structure",false,function(v)
 flags.nodupe=v;if v then local v2;v2=game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()task.wait();for _,v in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do if (v.Name=="DoorFake") then v.Hidden.CanTouch=false;end end repeat task.wait();until  not v16.nodupe v2:Disconnect();end);end end);
-
+Tab.Floors:Dropdown("Added Godmode",{"Figure (April Fools)"},function(v)
+_G.ModeSetting = _G.Figure
+game:GetService("RunService").RenderStepped:Connect(function(v)
+if _G.Godmode == true and _G.ModeSetting == "Figure (April Fools)" then
+V = false
+for _,v in pairs(game.workspace:GetDescendants()) do
+if v.Name == "Head" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.FakeHead.CanTouch = V
+elseif v.Name == "Torso" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.RibCage.CanTouch = V
+elseif v.Name == "LeftUpperArm" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+elseif v.Name == "RightUpperArm" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Blister.CanTouch = V
+elseif v.Name == "RightUpperLeg" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+elseif v.Name == "LeftUpperLeg" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+elseif v.Name == "LeftHand" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+elseif v.Name == "LeftLowerArm" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Blister.CanTouch = V
+elseif v.Name == "LeftMiddleArm" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Blister.CanTouch = V
+elseif v.Name == "RightHand" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+elseif v.Name == "RightLowerArm" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Blister.CanTouch = V
+elseif v.Name == "RightMiddleArm" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+elseif v.Name == "RightFoot" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Collision.CanTouch = V
+v.Collision.CanCollide = V
+elseif v.Name == "RightLowerLeg" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Blister.CanTouch = V
+elseif v.Name == "RightMiddleLeg" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Blister.CanTouch = false
+elseif v.Name == "LeftFoot" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Collision.CanTouch = V
+v.Collsion.CanCollide = V
+elseif v.Name == "LeftLowerLeg" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+elseif v.Name == "LeftMiddleLeg" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+v.Blister.CanTouch = V
+elseif v.Name == "Root" and v.Parent.Name == "FigureRagdoll" then
+v.CanTouch = V
+v.CanCollide = V
+end
+end
+end
+end)
+end)
 Tab.Floors:Toggle("Godmode",false,function(v)
-if v then
+_G.Godmode = v
+if _G.Godmode then
 local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
 Collison.Position = Collison.Position - Vector3.new(0,10,0)
 else

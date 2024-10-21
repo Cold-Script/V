@@ -923,12 +923,13 @@ _G.antije = v
 end)
 Tab.Floors:Toggle("Anti-Structure",false,function(v)
 flags.nodupe=v;if v then local v2;v2=game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()task.wait();for _,v in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do if (v.Name=="DoorFake") then v.Hidden.CanTouch=false;end end repeat task.wait();until  not v16.nodupe v2:Disconnect();end);end end);
-Tab.Floors:Dropdown("Added Godmode",{"Figure (April Fools)"},function(v)
-_G.ModeSetting = _G.Figure
-game:GetService("RunService").RenderStepped:Connect(function(v)
-if _G.Godmode == true and _G.ModeSetting == "Figure (April Fools)" then
+Tab.Floors:Toggle("Godmode",false,function(v)
+_G.Godmode = v
+_G.GodmodeFigure = v
+game:GetService("Workspace").DescendantAdded:Connect(function()
+if _G.GodmodeFigure then
 V = false
-for _,v in pairs(game.workspace:GetDescendants()) do
+for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "Head" and v.Parent.Name == "FigureRagdoll" then
 v.CanTouch = V
 v.CanCollide = V
@@ -1003,9 +1004,6 @@ end
 end
 end
 end)
-end)
-Tab.Floors:Toggle("Godmode",false,function(v)
-_G.Godmode = v
 if _G.Godmode then
 local Collison = game.Players.LocalPlayer.Character:FindFirstChild("Collision")
 Collison.Position = Collison.Position - Vector3.new(0,10,0)

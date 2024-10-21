@@ -477,10 +477,7 @@ if v then
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
 Highlight(v, "Door " .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
-end		
-end	
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
-if v.Name == "RoomsDoor_Entrance" then
+elseif v.Name == "RoomsDoor_Entrance" then
 Highlight(v, "Door (The Rooms)", Color3.fromRGB(80,255,200), "20", "DoorESP")
 end		
 end	
@@ -488,13 +485,10 @@ DoorESP = workspace.ChildAdded:Connect(function(child)
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
 if v.Name == "Door" and v.Parent.Name == "Door" then
 Highlight(v, "Door " .. v.Parent.Sign.Stinker.Text, Color3.fromRGB(80,255,200), "20", "DoorESP")
-end
-end
-for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
-if v.Name == "RoomsDoor_Entrance" then
+elseif v.Name == "RoomsDoor_Entrance" then
 Highlight(v, "Door (The Rooms)", Color3.fromRGB(80,255,200), "20", "DoorESP")
-end		
-end	
+end
+end
 end)
 else
 DoorESP:Disconnect()
@@ -937,17 +931,6 @@ local v3 = 0 local v4 while true do if v3 == 0 then v4 = game.Players.LocalPlaye
 
 
 
-Tab:Slider("This is Slider",0,10,0,function(V) end)
-Tab:Toggle("This is Toggle",false,function(v)
-if v then game.Lighting.Brightness = 100
-else 
-game.Lighting.Brightness = 1 end end)
-Tab:Label("This is Label")
-Tab:Button("This is Button",false,function()end)
-Tab:Textbox("This is Textbox",function()end)
-Tab:Dropdown("Dropdown",{"1","2","3"},function()end)
-Tab:Line() -- This is Line
-Tab:Button("This is Button But Notify",function()Library:Notify("< ! > | Notify","This is Notify",Color3.new(1,1,1),5)end)
 
 
 

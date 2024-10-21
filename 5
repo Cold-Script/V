@@ -342,6 +342,13 @@ Tab.Misc:Toggle("Fast Interact",false,function(v)
 _G.InstanceInteract = v
 end)
 Tab.Misc:Line()
+Tab.Misc:Toggle("Ground",false,function(v)
+if v then
+game.Players.LocalPlayer.Character.Humanoid.HipHeight = 0
+else
+game.Players.LocalPlayer.Character.Humanoid.HipHeight = 3
+end
+end)
 function checkDistance(part, extra)
 	if not extra then extra = 15 end
 	if not game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not part then
@@ -375,9 +382,9 @@ end)
 Tab.Misc:Toggle("Entities Notifier (Move)",false,function(v)
 if v then
 EntityNotifierMove = workspace.ChildAdded:Connect(function(child)
-if child.Name == "RushMoving" and checkDistance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
+if child.Name == "RushMoving" and checkDistance(child:IsA("BasePart"), 1000) then
 Library:Notify("< ! > | YOUHUB","Rush has spawned, find the closet hide now!",Color3.fromRGB(80,80,80),2.5)
-elseif child.Name == "AmbushMoving" and checkDistance(child:FindFirstChildWhichIsA("BasePart"), 1000) then
+elseif child.Name == "AmbushMoving" and checkDistance(child:IsA("BasePart"), 1000) then
 Library:Notify("< ! > | YOUHUB","Ambush has spawned, careful with it!",Color3.fromRGB(0,255,0),2.5)
 elseif child.Name == "BackdoorRush" then
 Library:Notify("< ! > | YOUHUB","Blitz has spawned, find the closet hide now!",Color3.fromRGB(0,200,0),2.5)
@@ -433,23 +440,6 @@ Tab.Misc:Button("Leave",function()
 Library:Notify("< ! > | YOUHUB","Leave is loading...",Color3.new(1,1,1),2.5)
 wait(3)
 game:Shutdown()
-end)
-Tab.Troll:Toggle("Spin",false,function(v)
-game:GetService("RunService").RenderStepped:Connect(function()
-for _,v in pairs(game.Players.LocalPlayer:GetDescendants()) do
-v:PivotTo(v:GetPivot() * CFrame.new(0, 0, 0) * CFrame.Angles(0, math.rad(10), 0))
-end
-end)
-end)
-Tab.Troll:Toggle("Stunned",false,function(v)
-game.Players.LocalPlayer.Character.Humanoid.Stunned = v
-end)
-Tab.Troll:Toggle("Ground",false,function(v)
-if v then
-game.Players.LocalPlayer.Character.Humanoid.HipHeight = 0
-else
-game.Players.LocalPlayer.Character.Humanoid.HipHeight = 2.18
-end
 end)
 Tab.Visual:Slider("Field Of View",70,120,0,function(v)
 _G.FieldOfView = v
@@ -635,16 +625,16 @@ Tab.Visual:Toggle("ESP Entity",false,function(v)
 if v then 
 for _,v in pairs(game.workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
-Highlight(v, "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
+Highlight(v, "Rush", Color3.fromRGB(100,100,100), "25", "BlackESP")
 elseif v.Name == "AmbushMoving" then
-Highlight(v, "Ambush", Color3.fromRGB(0,255,0), "50", "GreenESP")
+Highlight(v, "Ambush", Color3.fromRGB(0,255,0), "25", "GreenESP")
 elseif v.Name == "BackdoorRush" then
-Highlight(v, "Blitz", Color3.fromRGB(255), "50", "RedESP")
+Highlight(v, "Blitz", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "A60" then
-Highlight(v, "A-60", Color3.fromRGB(255), "50", "RedESP")
+Highlight(v, "A-60", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "A120" then
 Highlight(v, "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
-elseif v.Name == "Eyes" then
+elseif v.Name == "Core" and v.Parent.Name == "Eyes" then
 Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
 elseif v.Name == "FigureRig" then
 Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
@@ -652,8 +642,6 @@ elseif v.Name == "FigureRagdoll" then
 Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "JeffTheKiller" then
 Highlight(v, "Jeff The Killer", Color3.fromRGB(255,255,255), "25", "WhiteESP")
-elseif v.Name == "GiggleCeiling" then
-Highlight(v, "", Color3.fromRGB(255,255,255), "25", "WhiteESP")
 elseif v.Name == "Grumbo" then
 Highlight(v, "Grumble", Color3.fromRGB(255,255,255), "25", "WhiteESP")
 elseif v.Name == "BackdoorLookman" then
@@ -663,23 +651,23 @@ end
 EntityESP = workspace.ChildAdded:Connect(function(child)                       
 for _,v in pairs(game.workspace:GetDescendants()) do
 if v.Name == "RushMoving" then
-Highlight(v, "Rush", Color3.fromRGB(100,100,100), "50", "BlackESP")
+Highlight(v, "Rush", Color3.fromRGB(100,100,100), "25", "BlackESP")
 elseif v.Name == "AmbushMoving" then
-Highlight(v, "Ambush", Color3.fromRGB(0,255,0), "50", "GreenESP")
+Highlight(v, "Ambush", Color3.fromRGB(0,255,0), "25", "GreenESP")
 elseif v.Name == "BackdoorRush" then
-Highlight(v, "Blitz", Color3.fromRGB(255), "50", "RedESP")
+Highlight(v, "Blitz", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "A60" then
-Highlight(v, "A-60", Color3.fromRGB(255), "50", "RedESP")
+Highlight(v, "A-60", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "A120" then
 Highlight(v, "A-120", Color3.fromRGB(100,100,100), "50", "BlackESP")
-elseif v.Name == "Eyes" then
+elseif v.Name == "Core" and v.Parent.Name == "Eyes" then
 Highlight(v, "Eyes", Color3.fromRGB(0,0,255), "25", "BlueESP")
-elseif v.Name == "FigureSetup" then
+elseif v.Name == "FigureRig" then
+Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
+elseif v.Name == "FigureRagdoll" then
 Highlight(v, "Figure", Color3.fromRGB(255), "25", "RedESP")
 elseif v.Name == "JeffTheKiller" then
 Highlight(v, "Jeff The Killer", Color3.fromRGB(255,255,255), "25", "WhiteESP")
-elseif v.Name == "GiggleCeiling" then
-Highlight(v, "", Color3.fromRGB(255,255,255), "25", "WhiteESP")
 elseif v.Name == "Grumbo" then
 Highlight(v, "Grumble", Color3.fromRGB(255,255,255), "25", "WhiteESP")
 elseif v.Name == "BackdoorLookman" then
@@ -789,7 +777,7 @@ end)
 game:GetService("RunService").RenderStepped:Connect(function()
 if _G.SeekChase then
 for _,v in pairs(game.workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:GetDescendants()) do
-if v.Name == "TriggerEventCollsion" then
+if v.Name == "TriggerEventCollision" then
 v:Destroy()
 end
 end
